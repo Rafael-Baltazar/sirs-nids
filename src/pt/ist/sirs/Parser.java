@@ -35,7 +35,6 @@ public class Parser {
     	BufferedReader bufferedReader = null;
         BufferedWriter bufferedPre = null;
         BufferedWriter bufferedWriter = null;
-        BufferedReader bufferedReadPre = null;
         
         int byteCount;
         String[] binaryBytes = new String[MAX_BYTES_PER_PACKET];
@@ -59,7 +58,6 @@ public class Parser {
         }
             
         bufferedReader = new BufferedReader(new FileReader(filename));
-        bufferedReadPre = new BufferedReader(new FileReader(preProcessedOutputFile));
         bufferedPre = new BufferedWriter(new FileWriter(preProcessedOutputFile));
         bufferedWriter = new BufferedWriter(new FileWriter(outputFileDirectory,append));
             
@@ -98,7 +96,6 @@ public class Parser {
             
         }
         bufferedReader.close();
-        bufferedReadPre.close();
         bufferedPre.close();
         bufferedWriter.close();
     }
@@ -268,7 +265,7 @@ public class Parser {
         	p.preProcess(inputFileDirectory);
         	p.generateARFF();
         } catch (Exception e){
-        	System.out.println("Exception caught!");
+        	System.out.println("Exception caught!" + e.getMessage());
         }
             
         System.out.println("Concluido.");
