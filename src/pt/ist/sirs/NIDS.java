@@ -9,7 +9,6 @@ import weka.classifiers.trees.J48;
 import weka.core.Instances;
 
 public class NIDS {
-	
 	private Instances train;
 	
 	public void train(String filename) throws Exception{
