@@ -16,8 +16,9 @@ public class ArffCreator {
 	
 	private static String relation = "packets";
 	private static String type = "type";
+	private static String result = "passive";
 	
-	private static final String[] metrics = {"average", "sum", "sub"};
+	private static final String[] metrics = {"average", "sum"};
 	
 	public ArffCreator (String inputFile, int windowSize, int bitCount){
 		this.windowSize= windowSize;
@@ -30,6 +31,7 @@ public class ArffCreator {
 		BufferedReader bufferedReader;
 		BufferedWriter bufferedWriter;
 		int totalPackets;
+		int windowNum = 0;
 		int acc = 0;
 		bufferedWriter = new BufferedWriter(new FileWriter("out.arff"));
 		totalPackets = getNumLines(inputFile);
@@ -57,21 +59,14 @@ public class ArffCreator {
 				bufferedReader.skip(bitCount-1);
 			}
 			System.out.println(acc/totalPackets);
+			int average = acc/totalPackets;
+			bufferedWriter.write(average+","+acc+","+result);
+			
 			bufferedReader.close();
 			bufferedReader = new BufferedReader(new FileReader(inputFile));
 			
 		}
 		
-		
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
     	bufferedWriter.close();
     	bufferedReader.close();
 	}
