@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 
 public class Parser {
 
-
 	/*constants*/
 	private final static String TESTSET_FILE_NAME = "_testSet.arff";
 	private final static String TRAINERSET_FILE_NAME = "_trainerSet.arff";
@@ -242,7 +241,6 @@ public class Parser {
         preProcessedOutputFile="PreProcessing.txt";
         
         relationName = "pacotes";
-        
         
         if (args.length > 0) {
             inputFileDirectory = args[0];
