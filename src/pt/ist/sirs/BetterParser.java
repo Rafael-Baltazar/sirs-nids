@@ -5,7 +5,7 @@ import java.io.IOException;
 public class BetterParser {
 	
 	private static final String K14_FILE_NAME = "file.txt";
-	private static final String PRE_PROCESSING_FILE_NAME = "preProcessing.txt";
+	private static final String PRE_PROCESSING_FILE_NAME = "PreProcessing2.txt";
 	private static final String ARFF_TRAIN_FILE_NAME = "train1.arff";
 	private static final String ARFF_TEST_FILE_NAME = "test1.arff";
 	private static final int BYTE_COUNT = 54;

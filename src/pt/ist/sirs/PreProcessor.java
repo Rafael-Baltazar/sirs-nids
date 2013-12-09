@@ -26,6 +26,7 @@ public class PreProcessor {
 		
 		/* Convert every line to corresponding bit format */
 		String line = null;
+		String result = new String();
 		while((line = reader.readLine()) != null) {
 			StringTokenizer st = new StringTokenizer(line, "|", false);
 			
@@ -38,10 +39,15 @@ public class PreProcessor {
 			for(int i = 0; i < byteCount & st.hasMoreTokens(); i++) {
 				String nt = st.nextToken();
 				
-				int hex = Integer.parseInt(nt, 16);
-				System.out.print("|" + hex);
+				String hex = Integer.toBinaryString(Integer.parseInt(nt, 16));
+				
+				while(hex.length() < 8) {
+					hex = "0" + hex;
+				}
+				
+				result += hex;
 			}
-			System.out.println();
+			result += "\n";
 		}
 		
 		reader.close();
@@ -49,6 +55,8 @@ public class PreProcessor {
 		/* Save the pre-processed file */
 		BufferedWriter writer = null;
 		writer = new BufferedWriter(new FileWriter(preProcessedFileName));
+		
+		writer.write(result);
 		
 		writer.close();
 	}
