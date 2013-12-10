@@ -28,13 +28,14 @@ public class ArffCreator {
 	
 	public void generateARFF() throws IOException {
 
-		BufferedReader bufferedReader;
-		BufferedWriter bufferedWriter;
+		BufferedReader bufferedReader = null;
+		BufferedWriter bufferedWriter = null;
 		int totalPackets;
-		int windowNum = 0;
-		int acc = 0;
+		float average[] = new float[bitCount];
+		
 		bufferedWriter = new BufferedWriter(new FileWriter("out.arff"));
 		totalPackets = getNumLines(inputFile);
+		
 		
 		bufferedWriter.write("@RELATION"+ relation + "\n\n");
 
@@ -47,25 +48,28 @@ public class ArffCreator {
 			}
 			bufferedWriter.newLine();
 		}
-
 		bufferedWriter.write("@DATA\n");
 		bufferedReader = new BufferedReader(new FileReader(inputFile));
-		for(int bit=0;bit<bitCount;++bit){
-			bufferedReader.skip(bit);
-			acc = 0;
-			for(int pkt=0;pkt<totalPackets;++pkt){
-				System.out.println(bufferedReader.read());
-				acc += bufferedReader.read();
-				bufferedReader.skip(bitCount-1);
-			}
-			System.out.println(acc/totalPackets);
-			int average = acc/totalPackets;
-			bufferedWriter.write(average+","+acc+","+result);
-			
-			bufferedReader.close();
-			bufferedReader = new BufferedReader(new FileReader(inputFile));
-			
-		}
+		
+		System.out.println("Window size:" + windowSize);
+		System.out.println("Total:" + totalPackets);
+
+		
+		for(int wnds=(totalPackets/windowSize);wnds>=0;--wnds){ //window loop: this loot stops when there are no more windows to process
+			for(int pkt=0;pkt<windowSize && totalPackets>0;++pkt, --totalPackets){ //packet loop: this loot stops if there are no more packets in the window OR no more packets at all
+				for(int bit=0;bit<bitCount;++bit){//bit loop: this loop stops when it reads the last bit of a packet
+					
+					average[bit]+= bufferedReader.read() - '0';
+					
+				}//packet done
+				bufferedReader.skip(1); //skip line feed
+			}//window done
+			bufferedWriter.write(average[bitCount-2]+","+result+"\n"); // write to file FIXME: Need to write all avg to file, this is just for debug
+			average = new float[bitCount]; // clear buffer <----------------------FIXME: better way to clean buffer?
+		}//file done
+		
+		
+		
 		
     	bufferedWriter.close();
     	bufferedReader.close();
